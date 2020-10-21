@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/AdminPage.java</file>
+            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/SignupServerSide.java</file>
+            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/SearchTrainForUserInServer.java</file>
+            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/JdbcConnection.java</file>
+            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/Railway.java</file>
+            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/TrainsAdd.java</file>
+            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/CancelTrain.java</file>
+            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/LoginServerSide.java</file>
+            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/BookingTicket.java</file>
+            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/TrainsUpdate.java</file>
+        </group>
+    </open-files>
+</project-private>
