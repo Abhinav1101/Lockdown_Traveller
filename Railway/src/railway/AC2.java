@@ -22,7 +22,7 @@ import static railway.JdbcConnection.username;
 final class AC2 extends TrainClasses{
     final int totalSeats=54;
     private Connection con=null;
-    static boolean validSeat=false;
+    private boolean validSeat=false;
     AC2(){
         try{
             Class.forName(classForName);
@@ -140,5 +140,10 @@ final class AC2 extends TrainClasses{
         int val = counter/totalSeats;
         coachNumber = "A"+Integer.valueOf(val+1);
         seatNumber = counter%totalSeats;
+    }
+
+    @Override
+    public boolean validStatus() {
+        return validSeat;
     }
 }

@@ -23,16 +23,16 @@ public class UserLogin {
 //        System.out.println("username = "+Uname+" password = "+Pass);
     }
     public CachedRowSet userDashboard(){
-        LoginServerSide lss = new LoginServerSide();
+        DashboardFunctionality dashboard = new DashboardFunctionality();
         Uname = Railway.clientData.get(0);
-        crs = lss.userDashboard(Uname);
+        crs = dashboard.userDashboard(Uname);
         return crs;
     }
     public int updatePassword(){
         Uname = Railway.clientData.get(0);
         Pass = Railway.clientData.get(1);
-        LoginServerSide lss = new LoginServerSide();
-        int status = lss.updatePassword(Uname,Pass);
+        DashboardFunctionality dashboard = new DashboardFunctionality();
+        int status = dashboard.updatePassword(Uname,Pass);
         return status;
     }
 }

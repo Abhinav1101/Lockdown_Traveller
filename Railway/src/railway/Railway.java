@@ -184,18 +184,30 @@ class ClientThread extends Thread{
             }
             else if(typeOfAction.equals("bookTicket")){
                 BookTicket bookTicket = new BookTicket();
-                str = Boolean.toString(BookTicket.bookingStatus);
+                boolean bookingStatus = bookTicket.bookTicketCaller();
+                
+                CachedRowSet crs=null;
+                if(bookingStatus){
+                    crs = bookTicket.printTicket();
+                }
+                str = Boolean.toString(bookingStatus);
                 dout.writeUTF(str);
                 dout.flush();
+                if(bookingStatus){
+                    ObjectOutputStream objectOut = new ObjectOutputStream(s.getOutputStream());
+                    objectOut.writeObject(crs);
+                    objectOut.close();
+                }
                 dout.close();
             }
             else if(typeOfAction.equals("userSearchTrain")){
                 UserSearchTrain userSearchTrain = new UserSearchTrain();
+                CachedRowSet crs = userSearchTrain.userSearchingTrain();
                 ObjectOutputStream objectOut = new ObjectOutputStream(s.getOutputStream());
                 // THIS TOOK ME OVER 7 HOURS TO FIGURE OUT HOW TO SEND CRS OVER SOCKET
                 // I WAS USING ONLY WRITE INSTEAD OF WRITEOBJECT AND NO HELP PRESENT ON INTERNET FOR CRS
                 // FOUND WAY ACCIDENTALLY WHEN I LOST HOPE :)
-                objectOut.writeObject(UserSearchTrain.crs);
+                objectOut.writeObject(crs);
                 objectOut.close();
             }
             else if(typeOfAction.equals("userDashboard")){
@@ -212,7 +224,7 @@ class ClientThread extends Thread{
                 dout.flush();
                 dout.close();
             }
-            else if(typeOfAction.equals("userCancelTicket")){
+            else if(typeOfAction.equals("userFetchTicketToCancel")){
                 UserSearchTrain cancel = new UserSearchTrain();
                 CachedRowSet crs = cancel.userCancelTicket();
                 ObjectOutputStream objectOut = new ObjectOutputStream(s.getOutputStream());
@@ -232,6 +244,15 @@ class ClientThread extends Thread{
                 ObjectOutputStream objectOut = new ObjectOutputStream(s.getOutputStream());
                 objectOut.writeObject(crs);
                 objectOut.close();
+            }
+            else if(typeOfAction.equals("tatkalSearchTrain")){
+                Tatkal tatkal = new Tatkal();
+                ArrayList<Integer>seatLeft = tatkal.searchTatkalSeat();
+                
+            }
+            else if(typeOfAction.equals("tatkalBookTicket")){
+                Tatkal tatkal = new Tatkal();
+                int bookingStatus = tatkal.bookTatkalTicket();
             }
             din.close();
         }catch(Exception e){

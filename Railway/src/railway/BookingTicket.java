@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package railway;
+import com.sun.rowset.CachedRowSetImpl;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -30,15 +31,167 @@ abstract class TrainClasses{
     int counter=900;
     String coachNumber;
     int seatNumber;
+    int flag=-1;
     abstract public void lowerBerth();
     abstract public void middleBerth();
     abstract public void upperBerth();
     abstract public void sideLowerBerth();
     abstract public void sideUpperBerth();
     abstract public void getCoachNumberAndSeatNumber();
+    abstract public boolean validStatus();
     public String seat(){
+        String classOfBooking,berth;
+        int whereToUpdate=0;
+        Connection con=null;
+        ResultSet rs=null;
+        try{
+            Class.forName(classForName);
+            con = DriverManager.getConnection(getConnection, username,password);
+            String sql =  "Select * from vacantSeat where bookingForDate=? and train_no=?";
+            PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            pst.setDate(1, BookingTicket.sqlDateForBooking);
+            pst.setInt(2,BookingTicket.trainNo);
+            rs = pst.executeQuery();
+            classOfBooking = BookingTicket.classOfBooking;
+            berth = BookingTicket.prefferedBerth;
+            if(rs.next()){
+            if(classOfBooking.equals("Sleeper")){
+                if(berth.equals("Lower")){
+                    flag = rs.getInt("sleeperLower");
+                    whereToUpdate=1;
+                }
+                else if(berth.equals("Middle")){
+                    flag = rs.getInt("sleeperMiddle");
+                    whereToUpdate=2;
+                }
+                else if(berth.equals("Upper")){
+                    flag = rs.getInt("sleeperUpper");
+                    whereToUpdate=3;
+                }
+            }
+            else if(classOfBooking.equals("AC3")){
+                if(berth.equals("Lower")){
+                    flag = rs.getInt("ac3Lower");
+                    whereToUpdate=4;
+                }
+                else if(berth.equals("Middle")){
+                    flag = rs.getInt("ac3Middle");
+                    whereToUpdate=5;
+                }
+                else if(berth.equals("Upper")){
+                    flag = rs.getInt("ac3Upper");
+                    whereToUpdate=6;
+                }
+            }
+            else if(classOfBooking.equals("AC2")){
+                if(berth.equals("Lower")){
+                    flag = rs.getInt("ac2Lower");
+                    whereToUpdate=7;
+                }
+                else if(berth.equals("Upper")){
+                    flag = rs.getInt("ac2Upper");
+                    whereToUpdate=8;
+                }
+            }
+            else if(classOfBooking.equals("AC1")){
+                if(berth.equals("Lower")){
+                    flag = rs.getInt("ac1Lower");
+                    whereToUpdate=9;
+                }
+                else if(berth.equals("Upper")){
+                    flag = rs.getInt("ac1Upper");
+                    whereToUpdate=10;
+                }
+            }
+            }
+
+        }
+        catch(Exception e){
+             e.printStackTrace();
+            System.out.println("Seat final karne me problem hai abstract TicketClasses me "+e);
+        }finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                    
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Connection not closed properly");
+            }
+        }
+        // to book both side of seat in one compartment
+        if(flag==1){
+            seatNumber+=3;
+        }
+        if(whereToUpdate!=0){
+            updateFlag(whereToUpdate);
+        }
+        
         return coachNumber+" "+String.valueOf(seatNumber);
     }
+    
+    private void updateFlag(int whereToUpdate){
+        Connection con=null;
+        try{
+            Class.forName(classForName);
+            con = DriverManager.getConnection(getConnection, username,password);       
+            
+            String sql=null;
+            if(whereToUpdate==1){
+                sql = "Update vacantSeat set sleeperLower=1-sleeperLower where train_no=? and bookingForDate=?";
+            }
+            else if(whereToUpdate==2){
+                sql = "Update vacantSeat set sleeperMiddle=1-sleeperMiddle where train_no=? and bookingForDate=?";
+            }
+            else if(whereToUpdate==3){
+                sql = "Update vacantSeat set sleeperUpper=1-sleeperUpper where train_no=? and bookingForDate=?";
+            }
+            else if(whereToUpdate==4){
+                sql = "Update vacantSeat set ac3Lower=1-ac3Lower where train_no=? and bookingForDate=?";
+            }
+            else if(whereToUpdate==5){
+                sql = "Update vacantSeat set ac3Middle=1-ac3Middle where train_no=? and bookingForDate=?";
+            }
+            else if(whereToUpdate==6){
+                sql = "Update vacantSeat set ac3Upper=1-ac3Upper where train_no=? and bookingForDate=?";
+            }
+            else if(whereToUpdate==7){
+                sql = "Update vacantSeat set ac2Lower=1-ac2Lower where train_no=? and bookingForDate=?";
+            }
+            else if(whereToUpdate==8){
+                sql = "Update vacantSeat set ac2Upper=1-ac2Upper where train_no=? and bookingForDate=?";
+            }
+            else if(whereToUpdate==9){
+                sql = "Update vacantSeat set ac1Lower=1-ac1Lower where train_no=? and bookingForDate=?";
+            }
+            else if(whereToUpdate==10){
+                sql = "Update vacantSeat set ac1Upper=1-ac1Upper where train_no=? and bookingForDate=?";
+            }
+            PreparedStatement pst=con.prepareStatement(sql);
+            pst.setInt(1, BookingTicket.trainNo);
+            pst.setDate(2, BookingTicket.sqlDateForBooking);
+            pst.executeUpdate();
+            
+            
+        }
+        catch(Exception e){
+            System.out.println("fail in updating flag");
+            
+        }finally{
+            try{
+//                if(rs!=null)rs.close();
+                if(con!=null)con.close();
+                
+            }
+            catch(Exception e){
+                System.out.println("Connection not closed here in checking from and to station for booking");
+            }
+        }
+    }
+    
 }
 
 
@@ -47,12 +200,12 @@ abstract class TrainClasses{
 
 
 public class BookingTicket {
-    static boolean bookingStatus=false;
+    private boolean bookingStatus=false;
     static int trainNo;
     static public String classOfBooking,prefferedBerth;
     static public LocalDate dateForBooking;
     static public java.sql.Date sqlDateForBooking;
-    static public String seatNumber;
+    public String seatNumber;
     
     //variable to insert details into db if booking is successful
 //    private String username,passName,gender,fromStation,toStation;
@@ -68,6 +221,12 @@ public class BookingTicket {
         sqlDateForBooking = java.sql.Date.valueOf(dateForBooking);
         
         
+        
+        
+    }
+    
+    
+    public boolean bookingTicketMethod(String fromStation,String toStation){
         Connection con=null;
         ResultSet rs=null;
         try{
@@ -82,7 +241,22 @@ public class BookingTicket {
             rs = pst.executeQuery();
             if(!rs.next()){
                 System.out.println("Not this train number for this source and destination");
-                return;
+                
+                return false;
+            }
+            sql = "Select * from cancelledTrain where train_no=?";
+            pst=con.prepareStatement(sql);
+            pst.setInt(1, trainNo);
+            rs = pst.executeQuery();
+            java.sql.Date sqlDateFromCancelled;
+            java.sql.Date sqlDateToCancelled;
+            while(rs.next()){
+                sqlDateFromCancelled = rs.getDate("cancelled_date_from");
+                sqlDateToCancelled = rs.getDate("cancelled_date_to");
+                if(sqlDateForBooking.after(sqlDateFromCancelled)&&sqlDateForBooking.before(sqlDateToCancelled)){
+                    
+                    return false;
+                }
             }
             
         }
@@ -101,36 +275,43 @@ public class BookingTicket {
         }
         
         
-        
+        TrainClasses trainClasses;
         if(this.classOfBooking.equals("Sleeper")){
-            TrainClasses sleeper = new Sleeper();
-            bookingStatus = Sleeper.validSeat;
-            seatNumber = sleeper.seat();
+            trainClasses = new Sleeper();
+            bookingStatus = trainClasses.validStatus();
+            seatNumber = trainClasses.seat();
         }
         else if(this.classOfBooking.equals("AC3")){
-            TrainClasses ac3 = new AC3();
-            bookingStatus = AC3.validSeat;
-            seatNumber = ac3.seat();
+            trainClasses = new AC3();
+            bookingStatus = trainClasses.validStatus();
+            seatNumber = trainClasses.seat();
         }
         else if(this.classOfBooking.equals("AC2")){
-            TrainClasses ac2 = new AC2();
-            bookingStatus = AC2.validSeat;
-            seatNumber = ac2.seat();
+            trainClasses = new AC2();
+            bookingStatus = trainClasses.validStatus();
+            seatNumber = trainClasses.seat();
         }
         else if(this.classOfBooking.equals("AC1")){
-            TrainClasses ac1 = new AC1();
-            bookingStatus = AC1.validSeat;
-            seatNumber = ac1.seat();
+            trainClasses = new AC1();
+            bookingStatus = trainClasses.validStatus();
+            seatNumber = trainClasses.seat();
         }
         else{
             JOptionPane.showMessageDialog(null, "No such class of train exist");
-            return;
+            return false;
         }
         if(bookingStatus){
-            updateBookingDB();
+            if(trainClasses.flag!=0){
+                updateBookingDB();
+            }
         }
-        
+//        if(bookingStatus)
+//            return 1;
+//        else
+//            return 0;
+        return bookingStatus;
     }
+    
     private void updateBookingDB(){
        
         /*
@@ -213,7 +394,7 @@ public class BookingTicket {
        
     }
     
-    public static int insertPassengerRecordInDB(ArrayList<String>passengerRecord){
+    public static int insertPassengerRecordInDB(ArrayList<String>passengerRecord,String seatNumber){
         Connection con=null;
         try{
             Class.forName(classForName);
@@ -330,6 +511,41 @@ public class BookingTicket {
                 System.out.println("Connection not closed here in updating database");
             }
         }
+    }
+    
+    public CachedRowSetImpl fetchTicket(String seatNumber){
+        CachedRowSetImpl crs = null;
+        
+        Connection con=null;
+        ResultSet rs = null;
+        try{
+            Class.forName(classForName);
+            con = DriverManager.getConnection(getConnection, username,password);
+            
+            String sql = "Select * from passrecord where seatNumber=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1,seatNumber);
+            rs = pst.executeQuery();
+            crs  = new CachedRowSetImpl();
+            crs.populate(rs);
+            
+            
+        }
+        catch(ClassNotFoundException | SQLException e){
+            System.out.println("Ticket print fetch me problem hai");
+            
+        }finally{
+            try{
+                if(rs!=null)rs.close();
+                if(con!=null)con.close();
+            }
+            catch(SQLException e){
+                System.out.println("Connection not closed here in fetchticket");
+            }
+        }
+        
+        
+        return crs;
     }
     
 }

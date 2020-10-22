@@ -16,7 +16,7 @@ import javax.sql.rowset.CachedRowSet;
 public class UserSearchTrain {
     private String fromStation,toStation;
     private ArrayList<CachedRowSetImpl> searchedTrains;
-    public static CachedRowSet crs;
+    private CachedRowSet crs;
     
     // variable for cancel ticket
     private String Uname;
@@ -26,16 +26,20 @@ public class UserSearchTrain {
     UserSearchTrain(){
         fromStation = Railway.clientData.get(0);
         toStation = Railway.clientData.get(1);
+        
+        
+    }
+    public CachedRowSet userSearchingTrain(){
         SearchTrainForUserInServer search = new SearchTrainForUserInServer();
         crs = search.searchTrains(fromStation, toStation);
-        
+        return crs;
     }
     
     public CachedRowSet userCancelTicket(){
         CachedRowSet crs=null;
         Uname=Railway.clientData.get(0);
         SearchTrainForUserInServer cancel = new SearchTrainForUserInServer();
-        crs1 = cancel.cancelTicket(Uname);
+        crs1 = cancel.fetchTicketToCancel(Uname);
         return crs1;
     }
 

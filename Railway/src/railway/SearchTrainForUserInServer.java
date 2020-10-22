@@ -68,7 +68,7 @@ public class SearchTrainForUserInServer {
         return crs;
     }
     
-    public CachedRowSetImpl cancelTicket(String Uname){
+    public CachedRowSetImpl fetchTicketToCancel(String Uname){
         CachedRowSetImpl crs=null;
         Connection con=null;
         ResultSet rs=null;

@@ -21,7 +21,7 @@ import static railway.JdbcConnection.username;
 final class Sleeper extends TrainClasses{
     final int totalSeats=72;
     private Connection con=null;
-    public static boolean validSeat=false;
+    private boolean validSeat=false;
     
     Sleeper(){
         try{
@@ -157,5 +157,8 @@ final class Sleeper extends TrainClasses{
         coachNumber = "S"+Integer.valueOf(val+1);
         seatNumber = counter%totalSeats;
     }
-    
+    @Override
+    public boolean validStatus(){
+        return validSeat;
+    }
 }
