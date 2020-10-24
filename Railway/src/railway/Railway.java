@@ -66,7 +66,7 @@ class UserLogin{
         return status;
     }
 }*/
-
+/*
 class UserSignup{
     private String Name,Email,Uname,Pass,Cpass;
     public static int result;
@@ -80,6 +80,7 @@ class UserSignup{
         result = sss.userSignup(Name,Email,Uname,Pass,Cpass);
     }
 }
+*/
 /*
 class BookTicket{
     public static boolean bookingStatus;
@@ -167,20 +168,22 @@ class ClientThread extends Thread{
                 System.out.println(str);
             }
             if(typeOfAction.equals("userLogin")){
-                UserLogin ul = new UserLogin();
-                str = Integer.toString(ul.result);
+                User ul = new User();
+                int result  = ul.userLogin();
+                str = Integer.toString(result);
                 dout.writeUTF(str);
                 dout.flush();
                 dout.close();
-                System.out.println(ul.result);
+                System.out.println(result);
             }
             else if(typeOfAction.equals("userSignup")){
-                UserSignup us = new UserSignup();
-                str = Integer.toString(us.result);
+                User user = new User();
+                int result = user.userSignup();
+                str = Integer.toString(result);
                 dout.writeUTF(str);
                 dout.flush();
                 dout.close();
-                System.out.println(UserSignup.result);
+                System.out.println(result);
             }
             else if(typeOfAction.equals("bookTicket")){
                 BookTicket bookTicket = new BookTicket();
@@ -216,14 +219,14 @@ class ClientThread extends Thread{
                 objectOut.close();
             }
             else if(typeOfAction.equals("userDashboard")){
-                UserLogin ul = new UserLogin();
+                User ul = new User();
                 CachedRowSet crs = ul.userDashboard();
                 ObjectOutputStream objectOut = new ObjectOutputStream(s.getOutputStream());
                 objectOut.writeObject(crs);
                 objectOut.close();
             }
             else if(typeOfAction.equals("userUpdatePassword")){
-                UserLogin ul = new UserLogin();
+                User ul = new User();
                 int status = ul.updatePassword();
                 dout.write(status);
                 dout.flush();

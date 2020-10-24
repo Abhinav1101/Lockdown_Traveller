@@ -11,16 +11,21 @@ import javax.sql.rowset.CachedRowSet;
  *
  * @author abhi
  */
-public class UserLogin {
+public class User {
     private String Uname,Pass;
-    public static int result;
+    private int result;
     private CachedRowSet crs=null;
-    UserLogin(){
+    
+    private String Name,Email,Cpass;
+    
+    
+    public int userLogin(){
         Uname = Railway.clientData.get(0);
         Pass = Railway.clientData.get(1);
         LoginServerSide lss = new LoginServerSide();
         result = lss.userLogin(Uname,Pass);
-//        System.out.println("username = "+Uname+" password = "+Pass);
+        return result;
+
     }
     public CachedRowSet userDashboard(){
         DashboardFunctionality dashboard = new DashboardFunctionality();
@@ -35,4 +40,16 @@ public class UserLogin {
         int status = dashboard.updatePassword(Uname,Pass);
         return status;
     }
+    int userSignup(){
+        Name = Railway.clientData.get(0);
+        Email = Railway.clientData.get(1);
+        Uname = Railway.clientData.get(2);
+        Pass = Railway.clientData.get(3);
+        Cpass = Railway.clientData.get(4);
+        SignupServerSide sss = new SignupServerSide();
+        result = sss.userSignup(Name,Email,Uname,Pass,Cpass);
+        return result;
+    }
+
+    
 }
