@@ -23,10 +23,11 @@ public class SearchTrainAndDate extends javax.swing.JFrame {
     /**
      * Creates new form SearchTrainAndDate
      */
-    private String trainNo,dateOfOrder;
+    public String trainNo,dateOfOrder;
     
     java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
     java.time.LocalDate textFieldAsDate;
+    private CachedRowSet crs=null;
     
     
     public SearchTrainAndDate() {
@@ -155,7 +156,7 @@ public class SearchTrainAndDate extends javax.swing.JFrame {
             dout.flush();
             
             ObjectInputStream objectIn = new ObjectInputStream(s.getInputStream());
-            CachedRowSet crs = (CachedRowSet)objectIn.readObject();
+            crs = (CachedRowSet)objectIn.readObject();
             
             
             dout.close();
@@ -165,6 +166,9 @@ public class SearchTrainAndDate extends javax.swing.JFrame {
         catch(Exception e){
             JOptionPane.showMessageDialog(null,e);
         }
+        Orders orders = new Orders(crs,trainNo,dateOfOrder);
+        orders.setVisible(true);
+        dispose();
         
     }//GEN-LAST:event_searchOrderActionPerformed
 

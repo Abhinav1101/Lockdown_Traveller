@@ -202,12 +202,17 @@ class ClientThread extends Thread{
             }
             else if(typeOfAction.equals("userSearchTrain")){
                 UserSearchTrain userSearchTrain = new UserSearchTrain();
+                
                 CachedRowSet crs = userSearchTrain.userSearchingTrain();
+                
+                ArrayList<String> cancelledTrain = userSearchTrain.listOfCancelledTrain();
+                
                 ObjectOutputStream objectOut = new ObjectOutputStream(s.getOutputStream());
                 // THIS TOOK ME OVER 7 HOURS TO FIGURE OUT HOW TO SEND CRS OVER SOCKET
                 // I WAS USING ONLY WRITE INSTEAD OF WRITEOBJECT AND NO HELP PRESENT ON INTERNET FOR CRS
                 // FOUND WAY ACCIDENTALLY WHEN I LOST HOPE :)
                 objectOut.writeObject(crs);
+                objectOut.writeObject(cancelledTrain);
                 objectOut.close();
             }
             else if(typeOfAction.equals("userDashboard")){
@@ -225,7 +230,7 @@ class ClientThread extends Thread{
                 dout.close();
             }
             else if(typeOfAction.equals("userFetchTicketToCancel")){
-                UserSearchTrain cancel = new UserSearchTrain();
+                DashboardFunctionality cancel = new DashboardFunctionality();
                 CachedRowSet crs = cancel.userCancelTicket();
                 ObjectOutputStream objectOut = new ObjectOutputStream(s.getOutputStream());
                 objectOut.writeObject(crs);
@@ -246,13 +251,22 @@ class ClientThread extends Thread{
                 objectOut.close();
             }
             else if(typeOfAction.equals("tatkalSearchTrain")){
-                Tatkal tatkal = new Tatkal();
-                ArrayList<Integer>seatLeft = tatkal.searchTatkalSeat();
+                Tatkal tatkal = new Tatkal("Search");
+                CachedRowSet crs = tatkal.searchTatkalSeat();
+                UserSearchTrain userSearchTrain = new UserSearchTrain();
+                ArrayList<String> cancelledTrain = userSearchTrain.listOfCancelledTrain();
+                
+                ObjectOutputStream objectOut = new ObjectOutputStream(s.getOutputStream());
+                objectOut.writeObject(crs);
+                objectOut.writeObject(cancelledTrain);
+                objectOut.close();
                 
             }
             else if(typeOfAction.equals("tatkalBookTicket")){
-                Tatkal tatkal = new Tatkal();
+                Tatkal tatkal = new Tatkal("Book");
                 int bookingStatus = tatkal.bookTatkalTicket();
+                dout.write(bookingStatus);
+                dout.close();
             }
             din.close();
         }catch(Exception e){

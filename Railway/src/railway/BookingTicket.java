@@ -401,28 +401,44 @@ public class BookingTicket {
             con = DriverManager.getConnection(getConnection, username,password);
             
             // Fetching the fare for the ticket booked
-            String sql1 = null;
+            
+            //Now I am adding one more thing here so that I don't have to write such long condition again
+            // Update remaining seats in that train for that date
+            
+            String sql1 = null,sql2=null;
             String category=passengerRecord.get(2);
+            
+            
             if(category.equals("Sleeper")){
                 sql1 = "Select SLFare from train where train_no=?";
+                sql2 = "Update vacantSeat set sleeper=sleeper-1 where train_no=? and bookingForDate=?";
             }
             else if(category.equals("AC3")){
                 sql1 = "Select AC3Fare from train where train_no=?";
+                sql2 = "Update vacantSeat set ac3=ac3-1 where train_no=? and bookingForDate=?";
             }
             else if(category.equals("AC2")){
                 sql1 = "Select AC2Fare from train where train_no=?";
+                sql2 = "Update vacantSeat set ac2=ac2-1 where train_no=? and bookingForDate=?";
             }
             else if(category.equals("AC1")){
                 sql1 = "Select AC1Fare from train where train_no=?";
+                sql2 = "Update vacantSeat set ac1=ac1-1 where train_no=? and bookingForDate=?";
             }
             PreparedStatement pst1 = con.prepareStatement(sql1);
+            PreparedStatement pst2 = con.prepareStatement(sql2);
             pst1.setInt(1, Integer.parseInt(passengerRecord.get(0)));
             ResultSet rs = pst1.executeQuery();
+            
+            
             int fare=0;
             if(rs.next()){
                 fare = rs.getInt(1);
             }
             System.out.println("Fare  = "+fare);
+            pst2.setInt(1, Integer.parseInt(passengerRecord.get(0)));
+            pst2.setDate(2, sqlDateForBooking);
+            pst2.executeUpdate();
             
             
             
@@ -480,6 +496,7 @@ public class BookingTicket {
             
             
             
+            
             // Inserting details of the ticket booked
             sql="Insert into passrecord values(?,?,?,?,?,?,?,?,?,?,?,?)";
             pst=con.prepareStatement(sql);
@@ -501,6 +518,7 @@ public class BookingTicket {
             return 1;
         }
         catch(Exception e){
+            e.printStackTrace();
             System.out.println("Insertion of record into db failed even after successful booking");
             return 0;
         }finally{

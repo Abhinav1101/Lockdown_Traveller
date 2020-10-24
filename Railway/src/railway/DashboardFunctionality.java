@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.sql.rowset.CachedRowSet;
 import javax.swing.JOptionPane;
 import static railway.JdbcConnection.classForName;
 import static railway.JdbcConnection.getConnection;
@@ -85,4 +86,15 @@ public class DashboardFunctionality {
         }
         return 0;
     }
+    
+    
+    public CachedRowSet userCancelTicket(){
+        CachedRowSet crs=null;
+        String Uname=Railway.clientData.get(0);
+        SearchTrainForUserInServer cancel = new SearchTrainForUserInServer();
+        crs = cancel.fetchTicketToCancel(Uname);
+        return crs;
+    }
+    
+    
 }

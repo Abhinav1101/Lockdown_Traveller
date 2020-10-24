@@ -30,19 +30,29 @@ public class Tatkal {
     java.time.LocalDate textFieldAsDate;
     java.sql.Date sqlDateOfJourney;
     
-    Tatkal(){
-        trainNo = Integer.parseInt(Railway.clientData.get(0));
-        dateOfBooking = Railway.clientData.get(1);
-        pname = Railway.clientData.get(2);
-        age = Railway.clientData.get(3);
-        gender = Railway.clientData.get(4);
-        fromStation = Railway.clientData.get(5);
-        toStation = Railway.clientData.get(6);
-        classOfBooking = Railway.clientData.get(7);
-        username = Railway.clientData.get(8);
-        
-        textFieldAsDate = java.time.LocalDate.parse(dateOfBooking, formatter);
-        sqlDateOfJourney = java.sql.Date.valueOf(textFieldAsDate);
+    Tatkal(String typeOfAction){
+        if(typeOfAction.equals("Book")){
+            trainNo = Integer.parseInt(Railway.clientData.get(0));
+            dateOfBooking = Railway.clientData.get(1);
+            pname = Railway.clientData.get(2);
+            age = Railway.clientData.get(3);
+            gender = Railway.clientData.get(4);
+            fromStation = Railway.clientData.get(5);
+            toStation = Railway.clientData.get(6);
+            classOfBooking = Railway.clientData.get(7);
+            username = Railway.clientData.get(8);
+
+            textFieldAsDate = java.time.LocalDate.parse(dateOfBooking, formatter);
+            sqlDateOfJourney = java.sql.Date.valueOf(textFieldAsDate);
+        }
+        else if(typeOfAction.equals("Search")){
+            dateOfBooking = Railway.clientData.get(2);
+            fromStation = Railway.clientData.get(0);
+            toStation = Railway.clientData.get(1);
+            
+            textFieldAsDate = java.time.LocalDate.parse(dateOfBooking, formatter);
+            sqlDateOfJourney = java.sql.Date.valueOf(textFieldAsDate);
+        }
 
         
     }
@@ -50,9 +60,9 @@ public class Tatkal {
         Connection con=null;
         ResultSet rs=null;
         try{
-            Class.forName(classForName);
-            con = DriverManager.getConnection(getConnection, username,password);
-            
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Passenger", "root","");
+           
             
             // Fetching the fare for the ticket booked
             String sql1 = null;
@@ -107,6 +117,12 @@ public class Tatkal {
                 pst.setString(11, "Tatkal");
                 pst.setString(12, rs.getString("seatNumber"));
                 pst.executeUpdate();
+                
+                //Deleting that ticket from cancelledTicket
+                sql = "Delete from cancelledTicket where seatNumber=?";
+                pst = con.prepareStatement(sql);
+                pst.setString(1, rs.getString("seatNumber"));
+                pst.executeUpdate();
 
 
                 return 1;
@@ -133,54 +149,38 @@ public class Tatkal {
         return 0;
     }
     
-    public ArrayList searchTatkalSeat(){
-        ArrayList<Integer> seatLeft = new ArrayList<>();
+    public CachedRowSetImpl searchTatkalSeat(){
+        CachedRowSetImpl crs=null;
         Connection con=null;
         ResultSet rs=null;
         try{
-            Class.forName(classForName);
-            con = DriverManager.getConnection(getConnection, username,password);
-            String sql = "Select count(train_no) from cancelledTicket where train_no=? and dateOfJourney=? and classOfBooking=?";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Passenger", "root","");
+           
+            String sql = " SELECT cancelledTicket.train_no,"
+                    + " sum(case when classOfBooking='sleeper' then 1 else 0 end) as sleeper,"
+                    + " sum(case when classOfBooking='ac3' then 1 else 0 end) as ac3,"
+                    + " sum(case when classOfBooking='ac2' then 1 else 0 end) as ac2,"
+                    + " sum(case when classOfBooking='ac1' then 1 else 0 end) as ac1,"
+                    + " train.TrainType,train.name,train.src,train.dest,train.ArrTime,"
+                    + " train.DepTime from cancelledTicket INNER JOIN train on"
+                    + " cancelledTicket.train_no = train.train_no "
+                    + " where cancelledTicket.fromStation=? and cancelledTicket.toStation=? and"
+                    + " cancelledTicket.dateOfJourney=? GROUP by cancelledTicket.train_no";
+                    
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setInt(1, trainNo);
-            pst.setDate(2, sqlDateOfJourney);
-            pst.setString(3, "Sleeper");
+            
+            pst.setString(1, fromStation);
+            pst.setString(2,toStation);
+            pst.setDate(3, sqlDateOfJourney);
             rs = pst.executeQuery();
-            while(rs.next()){
-                seatLeft.add(rs.getInt(1));
-            }
+            crs = new CachedRowSetImpl();
+            crs.populate(rs);
             
-            
-            pst = con.prepareStatement(sql);
-            pst.setInt(1, trainNo);
-            pst.setDate(2, sqlDateOfJourney);
-            pst.setString(3, "AC3");
-            rs = pst.executeQuery();
-            while(rs.next()){
-                seatLeft.add(rs.getInt(1));
-            }
-            
-            pst = con.prepareStatement(sql);
-            pst.setInt(1, trainNo);
-            pst.setDate(2, sqlDateOfJourney);
-            pst.setString(3, "AC2");
-            rs = pst.executeQuery();
-            while(rs.next()){
-                seatLeft.add(rs.getInt(1));
-            }
-            
-            
-            pst = con.prepareStatement(sql);
-            pst.setInt(1, trainNo);
-            pst.setDate(2, sqlDateOfJourney);
-            pst.setString(3, "AC1");
-            rs = pst.executeQuery();
-            while(rs.next()){
-                seatLeft.add(rs.getInt(1));
-            }
     
         }
         catch(ClassNotFoundException | SQLException e){
+            e.printStackTrace();
             System.out.println("tatkal search me issue hai "+e);
         }finally {
             try {
@@ -196,6 +196,6 @@ public class Tatkal {
             }
         }        
         
-        return seatLeft;
+        return crs;
     }
 }

@@ -15,6 +15,8 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.sql.rowset.CachedRowSet;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
@@ -24,7 +26,7 @@ import javax.swing.JOptionPane;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-public class PassengerDetailsForm extends javax.swing.JFrame {
+public class TatkalTicketBooking extends javax.swing.JFrame {
 
     String AC1, AC2, AC3, SL, from1, to1, no, type, seat1, name, arrtime, deptime,text;
     java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -35,8 +37,14 @@ java.sql.Date sqlDate;
 static String PassName11;
      
 
-    public PassengerDetailsForm() {
+    public TatkalTicketBooking() {
+        
         initComponents();
+        LocalDate date = LocalDate.now();
+        date = date.plusDays(1);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("DD/MM/YYYY");
+        System.out.println("date = "+this.formatter.format(date));
+        date_of_journey.setText(this.formatter.format(date));
     }
 
     /**
@@ -67,9 +75,7 @@ static String PassName11;
         txtGender = new javax.swing.JComboBox<>();
         btnBack = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        date_of_journey = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        prefferedBerth = new javax.swing.JComboBox<>();
+        date_of_journey = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName(""); // NOI18N
@@ -180,21 +186,7 @@ static String PassName11;
         jLabel3.setForeground(new java.awt.Color(255, 0, 0));
         jLabel3.setText("Date of Journey");
 
-        date_of_journey.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        date_of_journey.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                date_of_journeyActionPerformed(evt);
-            }
-        });
-
-        jLabel6.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel6.setText("Berth Preference");
-
-        prefferedBerth.setBackground(new java.awt.Color(102, 255, 255));
-        prefferedBerth.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        prefferedBerth.setForeground(new java.awt.Color(153, 0, 153));
-        prefferedBerth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lower", "Middle", "Upper", "SideLower", "SideUpper" }));
+        date_of_journey.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -217,12 +209,8 @@ static String PassName11;
                                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtGender, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbSeat, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(71, 71, 71)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(prefferedBerth, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 172, Short.MAX_VALUE))
+                                    .addComponent(cmbSeat, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 391, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -237,14 +225,11 @@ static String PassName11;
                                         .addComponent(txtPassengerName, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(87, 87, 87)
                                         .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(102, 102, 102)
-                                        .addComponent(jLabel3))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(72, 72, 72)
-                                        .addComponent(date_of_journey, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(102, 102, 102)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(date_of_journey, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(306, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -278,13 +263,9 @@ static String PassName11;
                         .addGap(25, 25, 25)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtGender, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(prefferedBerth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(txtGender, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(16, 16, 16)
                 .addComponent(txtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
@@ -295,10 +276,9 @@ static String PassName11;
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtPassengerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(date_of_journey, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                    .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(date_of_journey, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBookTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnResetForm, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -329,15 +309,7 @@ static String PassName11;
         
         // ABHI USING PREV CODE WRITTEN BY HARSH TO MAKE IT USABLE FOR SOCKET
         text = date_of_journey.getText();
-        try{
-            textFieldAsDate = java.time.LocalDate.parse(text, formatter);
-        }
-        catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(this, "Invalid Date! Please enter the date in DD/MM/YYYY format!");  
-            System.out.println(e);
-            return;
-        }
+        
         
         if(from.equals("")||to.equals("")||trno.equals("")||PassName11.equals("")||txtAge.getText().equals("")||text.equals("")){
             JOptionPane.showMessageDialog(this, "All Fields Are necessary, you cannot leave any field empty");
@@ -347,82 +319,9 @@ static String PassName11;
         // Iske bich me Abhi ka code hai
         
         
-        
-        
-        /*
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3336/Passenger", "root", "Harsh@2000"); Statement statement = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
-
-                String query = "SELECT * FROM train WHERE StationFrom='" + from + "' AND StationTo= '" + to + "' AND train_no = '" + trno + "'";
-                try (ResultSet result = statement.executeQuery(query)) {
-                    while (result.next()) {
-                        
-                        from1 = result.getString("StationFrom");
-                        to1 = result.getString("StationTo");
-                        no = result.getString("train_no");
-                        name = result.getString("NameOfTrain");
-
-                        type = result.getString("TrainType"); 
-                        arrtime = result.getString("ArrTime");
-                        deptime = result.getString("DepTime");
-                         text = date_of_journey.getText();
-                         try{
-                         textFieldAsDate = java.time.LocalDate.parse(text, formatter);
-                         }
-                         catch(Exception e)
-                         {
-                          JOptionPane.showMessageDialog(this, "Invalid Date! Please enter the date in DD/MM/YYYY format!");  
-                          System.out.println(e);
-                         }
-                         sqlDate= java.sql.Date.valueOf(textFieldAsDate);
-                        switch (seat) {
-                            case "AC1":
-                                seat1 = result.getString("AC1Fare");
-                                break;
-                            case "AC2":
-                                seat1 = result.getString("AC2Fare");
-                                break;
-                            case "AC3":
-                                seat1 = result.getString("AC3Fare");
-                                break;
-                            case "SL":
-                                seat1 = result.getString("SLFare");
-                                break;
-                            default:
-                                break;
-                        }
-
-                        if (from.equals(from1) && to.equals(to1) && trno.equals(no)) {
-                            flag = 0;
-                            break;
-                        }
-                    }
-
-                    if (flag != 0) {
-                        JOptionPane.showMessageDialog(this, "This train not found!!, Please enter other train!!");
-                    } else {
-                        try (Statement statement1 = conn.createStatement()) {
-
-                            String query1 = "INSERT into passrecord(Username, pName, pGender, pAge, pAction, StationFrom, StationTo, train_no, TrainType, SeatFare, trainName,ArrTime,DeptTime,DateOfJourney) VALUES('" + Login.loggedInUser + "','" + txtPassengerName.getText() + "','" + gender + "','" + txtAge.getText() + "','" + seat + "','" + from1 + "','" + to1 + "', '" + no + "','" + type + "', '" + seat1 + "','" + name + "', '" + arrtime + "','" + deptime + "','" + sqlDate + "');";
-                            statement1.executeUpdate(query1);
-                            Ticket al;
-                            al = new Ticket();
-                            al.setVisible(true);
-                            this.setVisible(false);
-                        }
-                    }
-                }
-            }
-        } catch (HeadlessException | ClassNotFoundException | SQLException e) {
-            System.out.println(e);
-        }
-        
-        */
-        
         //ABHINAV IS MAKING CHANGE HERE
         // this res variable will tell whether the booking is successful or failed and now res can be used for setting flag
-        boolean res=false;
+        int res=0;
         String ticketFare="0";//it will get actual value from a sql query on server side here it is dummy
         
         try{
@@ -430,45 +329,33 @@ static String PassName11;
             DataOutputStream dout = new DataOutputStream(s.getOutputStream());
             
             
-            dout.writeUTF("bookTicket");
+            dout.writeUTF("tatkalBookTicket");
             dout.writeUTF(trno);
-            dout.writeUTF(date_of_journey.getText());
-            dout.writeUTF(seat);
-            dout.writeUTF((String) prefferedBerth.getSelectedItem());
+            dout.writeUTF(String.valueOf(date_of_journey.getText()));
             
-            // this will be used if booking done successfully
-            // This will be used for insertion of passenger details in the database for future use
-            
-            dout.writeUTF(Login.loggedInUser);
             dout.writeUTF(PassName11);
-            dout.writeUTF(gender);
             dout.writeUTF(txtAge.getText());
-//            dout.writeUTF(seat);
+            dout.writeUTF(gender);
             dout.writeUTF(from);
             dout.writeUTF(to);
-            dout.writeUTF(ticketFare);
-//            dout.writeUTF(trno);
-//            dout.writeUTF(text);
-//            dout.writeUTF(prefferedBerth.getText());
             
+            dout.writeUTF(seat);
+            
+            
+            
+            dout.writeUTF("devta");
+            
+
             
             
             dout.writeUTF("null");
             dout.flush();
             
-            String str="";
-            while(str.equals("")){
             DataInputStream din = new DataInputStream(s.getInputStream());
-            str = din.readUTF();
-            res = Boolean.parseBoolean(str);
-            System.out.println("result = "+str);
-            }
+            res = din.read();
             
-            if(res){
-                ObjectInputStream objectIn = new ObjectInputStream(s.getInputStream());
-                
-                crs = (CachedRowSet)objectIn.readObject();
-            }
+            
+            
             
             dout.close();
             s.close();
@@ -477,14 +364,16 @@ static String PassName11;
             JOptionPane.showMessageDialog(null,e);
         }
         
-        if (!res) {
+        if (res==0) {
             JOptionPane.showMessageDialog(this, "This train not found or Some error Occured!!, Please enter other train or try Again!!");
         }
         else{
-            Ticket al;
-            al = new Ticket(crs);
-            al.setVisible(true);
-            this.setVisible(false);
+            System.out.println("ticket booked");
+            JOptionPane.showMessageDialog(null, "Booking Done Successfully!!!");
+//            Ticket al;
+//            al = new Ticket(crs);
+//            al.setVisible(true);
+//            this.setVisible(false);
         }
         
         
@@ -514,8 +403,8 @@ static String PassName11;
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
 //        AdminPage pdf = new AdminPage();
 //        pdf.setVisible(true);
-TrainBetweenStation tbs=new TrainBetweenStation();
-tbs.setVisible(true);
+        TrainBetweenStation tbs=new TrainBetweenStation();
+        tbs.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
@@ -527,28 +416,22 @@ tbs.setVisible(true);
         }
     }//GEN-LAST:event_txtAgeKeyTyped
 
-    private void date_of_journeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_date_of_journeyActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_date_of_journeyActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnBookTicket;
     private javax.swing.JButton btnResetForm;
     private javax.swing.JComboBox<String> cmbSeat;
-    private javax.swing.JTextField date_of_journey;
+    private javax.swing.JLabel date_of_journey;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JComboBox<String> prefferedBerth;
     private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtFrom;
     private javax.swing.JComboBox<String> txtGender;

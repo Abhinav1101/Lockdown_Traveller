@@ -107,6 +107,11 @@ public class Dashboarduser extends javax.swing.JFrame {
         jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 170, 30));
 
         jButton4.setText("Cancel booking");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 170, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 2, 36)); // NOI18N
@@ -225,12 +230,12 @@ public class Dashboarduser extends javax.swing.JFrame {
 //                ps1.setString(1, rs.getString("train_no"));
 //                ResultSet rs1=ps1.executeQuery();
                 Date jour=sdfo.parse(crs.getString("DateOfJourney"));
-                if(jour.compareTo(cur)>=0)
-                {   
+//                if(jour.compareTo(cur)>=0)
+//                {   
 //                System.out.println(rs1.getString("StationFrom"));
                 Object o[]={crs.getString("DateOfJourney"),crs.getString("train_no"),crs.getString("StationFrom"),crs.getString("StationTo")};
                 tm.addRow(o);
-                }
+//                }
             }
         }
         catch(Exception e) 
@@ -297,41 +302,16 @@ public class Dashboarduser extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_mealBookingActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        Cancel cancel = new Cancel();
+        cancel.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Dashboarduser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Dashboarduser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Dashboarduser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Dashboarduser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Dashboarduser().setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

@@ -25,32 +25,30 @@ import static railway.JdbcConnection.username;
  */
 public class SearchTrainForUserInServer {
     private ArrayList<CachedRowSetImpl> searchedTrains = new ArrayList<CachedRowSetImpl>();
-    public CachedRowSetImpl searchTrains(String fromStation,String toStation){
+    
+    public CachedRowSetImpl searchTrains(String fromStation,String toStation,String searchDate){
         CachedRowSetImpl crs=null;
         Connection con=null;
         ResultSet rs=null;
+        java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        java.time.LocalDate textFieldAsDate;
+        textFieldAsDate = java.time.LocalDate.parse(searchDate, formatter);
+        java.sql.Date sqlSearchDate= java.sql.Date.valueOf(textFieldAsDate);
         try{
             Class.forName(classForName);
             con = DriverManager.getConnection(getConnection, username,password);
-            String sql = "Select * from train where src=? and dest=?";
+            String sql = "Select train.src,train.dest,train.TrainType,train.train_no"
+                    + ",train.name,train.ArrTime,train.DepTime,vacantSeat.sleeper,vacantSeat.ac3,vacantSeat.ac2,vacantSeat.ac1"
+                    + " from train inner join vacantSeat on train.train_no = vacantSeat.train_no where "
+                    + "train.src=? and train.dest=? and vacantSeat.bookingForDate = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, fromStation);
             pst.setString(2, toStation);
+            pst.setDate(3, sqlSearchDate);
             rs = pst.executeQuery();
             crs = new CachedRowSetImpl();
             crs.populate(rs);
-//            while(rs.next()){
-//                String arrtime = rs.getString("ArrTime");
-//                String deptime = rs.getString("DepTime");
-//                String SLSeat=rs.getString("SLSeat");
-//                String AC1Seat=rs.getString("AC1Seat");
-//                String AC2Seat=rs.getString("AC2Seat");
-//                String AC3Seat=rs.getString("AC3Seat");
-//                System.out.println("arr = "+arrtime+" deptime= "+deptime+" Sl seat = "+SLSeat+" AC1 seat= "+AC1Seat);
-////                crs = new CachedRowSetImpl();
-////                crs.populate(rs);
-////                searchedTrains.add(crs);
-//            }
+
             
             
         }catch(Exception e){
@@ -67,6 +65,53 @@ public class SearchTrainForUserInServer {
         
         return crs;
     }
+
+    public ArrayList cancelledTrainOnThatDate(String searchDate){
+        ArrayList<String> cancelledTrain = new ArrayList<>();
+        java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        java.time.LocalDate textFieldAsDate;
+        textFieldAsDate = java.time.LocalDate.parse(searchDate, formatter);
+        java.sql.Date sqlSearchDate= java.sql.Date.valueOf(textFieldAsDate);
+        
+        Connection con=null;
+        ResultSet rs=null;
+        try{
+            Class.forName(classForName);
+            con = DriverManager.getConnection(getConnection, username,password);
+            String sql = "Select * from cancelledTrain";
+            PreparedStatement pst = con.prepareStatement(sql);
+            
+            rs = pst.executeQuery();
+            while(rs.next()){
+                if(sqlSearchDate.after(rs.getDate("cancelled_date_from"))&&sqlSearchDate.before(rs.getDate("cancelled_date_to"))){
+                    cancelledTrain.add(String.valueOf(rs.getInt("train_no")));
+                }
+                 
+            }
+
+
+
+            
+            
+        }catch(Exception e){
+            System.out.println("error in searching cancelled train");
+            e.printStackTrace();
+        }finally{
+            try{
+                if(rs!=null)rs.close();
+                if(con!=null)con.close();
+            }catch(Exception e){
+                System.out.println("error in closing connection and resultset");
+            }
+        }
+        
+        
+        
+        
+        return cancelledTrain;
+    }
+    
+    
     
     public CachedRowSetImpl fetchTicketToCancel(String Uname){
         CachedRowSetImpl crs=null;

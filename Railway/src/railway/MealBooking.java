@@ -107,7 +107,7 @@ public class MealBooking {
         try{
             Class.forName(classForName);
             con = DriverManager.getConnection(getConnection, username,password);
-            String sql =  "Select * from mealOrder where train_no=? and dateOfOrder=?";
+            String sql =  "Select * from mealOrder where train_no=? and dateOfOrder=? order by seatNumber";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, trainNo);
             pst.setDate(2, sqlDateOfJourney);
@@ -118,7 +118,7 @@ public class MealBooking {
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null,e);
-            System.out.println("yaha dikkat hai");
+            System.out.println("Problem in meal Search server side");
         }finally {
             try {
                 if (rs != null) {

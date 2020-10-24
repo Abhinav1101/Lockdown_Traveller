@@ -42,7 +42,7 @@ public class Cancel extends javax.swing.JFrame {
             Socket s = new Socket("localhost",6666);
             DataOutputStream dout = new DataOutputStream(s.getOutputStream());
             
-            dout.writeUTF("userCancelTicket");
+            dout.writeUTF("userFetchTicketToCancel");
             dout.writeUTF(Login.loggedInUser);
             dout.writeUTF("null");
             dout.flush();
@@ -75,12 +75,12 @@ public class Cancel extends javax.swing.JFrame {
                 ResultSet rs1=ps1.executeQuery();
                 */
                 Date jour=sdfo.parse(crs.getString("DateOfJourney"));
-                if(jour.compareTo(cur)>=0)
-                {   
+//                if(jour.compareTo(cur)>=0)
+//                {   
 //                System.out.println(rs1.getString("StationFrom"));
                 Object o[]={crs.getString("DateOfJourney"),crs.getString("train_no"),crs.getString("StationFrom"),crs.getString("StationTo"),crs.getString("ticket_id")};
                 tm.addRow(o);
-                }
+//                }
             }
         }
         catch(Exception e) 
