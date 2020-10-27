@@ -6,6 +6,7 @@
 package railway;
 
 import java.util.ArrayList;
+import javax.sql.rowset.CachedRowSet;
 
 /**
  *
@@ -19,10 +20,14 @@ public class BookTicket {
     */
     
 //    public static boolean bookingStatus;
-    static boolean bookingStatus;
+    private boolean bookingStatus;
     private int trainNo;
+    private CachedRowSet crs;
     //variables for booking
     private String dateForBooking,classOfBooking,prefferedBerth,fromStation,toStation;
+    
+    java.time.LocalDate textFieldAsDate;
+    
     //variables for inserting into db if booking is successful
     
     private ArrayList<String> passengerRecord = new ArrayList<String>();
@@ -36,17 +41,28 @@ public class BookTicket {
         fromStation = Railway.clientData.get(8);
         toStation = Railway.clientData.get(9);
         java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        java.time.LocalDate textFieldAsDate = java.time.LocalDate.parse(dateForBooking, formatter);
+        textFieldAsDate = java.time.LocalDate.parse(dateForBooking, formatter);
 
+        
+    }
+    public boolean bookTicketCaller(){
         BookingTicket bookingTicket = new BookingTicket(trainNo,textFieldAsDate,classOfBooking,prefferedBerth,fromStation,toStation);
-        System.out.println("Booking done "+BookingTicket.bookingStatus);
-        bookingStatus = BookingTicket.bookingStatus;
+        int age = Integer.valueOf(Railway.clientData.get(7));
+        String gender = Railway.clientData.get(6);
+        bookingStatus = bookingTicket.bookingTicketMethod(fromStation, toStation,age,gender);
+        System.out.println("Booking done "+bookingStatus);
+//        bookingStatus = BookingTicket.bookingStatus;
+        
         if(bookingStatus){
             for(String str:Railway.clientData){
                 passengerRecord.add(str);
             }
-            BookingTicket.insertPassengerRecordInDB(passengerRecord);
+            BookingTicket.insertPassengerRecordInDB(passengerRecord,bookingTicket.seatNumber);
+            crs = bookingTicket.fetchTicket(bookingTicket.seatNumber,trainNo,dateForBooking);
         }
+        return bookingStatus;
     }
-    
+    public CachedRowSet printTicket(){
+        return crs;
+    }
 }

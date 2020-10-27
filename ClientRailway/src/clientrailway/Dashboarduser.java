@@ -54,6 +54,7 @@ public class Dashboarduser extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        complaints_button = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -66,6 +67,7 @@ public class Dashboarduser extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         mealBooking = new javax.swing.JButton();
+        Notify = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -93,6 +95,15 @@ public class Dashboarduser extends javax.swing.JFrame {
         });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 50, 120, 30));
 
+        complaints_button.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        complaints_button.setText("Complaints");
+        complaints_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                complaints_buttonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(complaints_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(823, 90, 130, 30));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 140));
 
         jPanel2.setBackground(new java.awt.Color(153, 255, 255));
@@ -104,10 +115,15 @@ public class Dashboarduser extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 170, 30));
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 30));
 
         jButton4.setText("Cancel booking");
-        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 170, 30));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 170, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 2, 36)); // NOI18N
         jLabel2.setText("Upcoming Tickets");
@@ -150,7 +166,7 @@ public class Dashboarduser extends javax.swing.JFrame {
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, -1, -1));
         jPanel4.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 130, 30));
 
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, 200, 100));
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 40, 200, 100));
 
         mealBooking.setText("Book Meal");
         mealBooking.setMaximumSize(new java.awt.Dimension(119, 29));
@@ -160,7 +176,15 @@ public class Dashboarduser extends javax.swing.JFrame {
                 mealBookingActionPerformed(evt);
             }
         });
-        jPanel2.add(mealBooking, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, 170, -1));
+        jPanel2.add(mealBooking, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 180, 30));
+
+        Notify.setText("Notification");
+        Notify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NotifyActionPerformed(evt);
+            }
+        });
+        jPanel2.add(Notify, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 0, 160, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 960, 380));
 
@@ -214,6 +238,7 @@ public class Dashboarduser extends javax.swing.JFrame {
 
 
             DefaultTableModel tm=(DefaultTableModel)table1.getModel();
+            tm.setRowCount(0);
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             Calendar calobj = Calendar.getInstance();
             SimpleDateFormat sdfo= new SimpleDateFormat("yyyy-MM-dd"); 
@@ -227,7 +252,6 @@ public class Dashboarduser extends javax.swing.JFrame {
                 Date jour=sdfo.parse(crs.getString("DateOfJourney"));
                 if(jour.compareTo(cur)>=0)
                 {   
-//                System.out.println(rs1.getString("StationFrom"));
                 Object o[]={crs.getString("DateOfJourney"),crs.getString("train_no"),crs.getString("StationFrom"),crs.getString("StationTo")};
                 tm.addRow(o);
                 }
@@ -297,43 +321,34 @@ public class Dashboarduser extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_mealBookingActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        Cancel cancel = new Cancel();
+        cancel.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void complaints_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_complaints_buttonActionPerformed
+        // TODO add your handling code here:
+        ChatWindow chw=new ChatWindow();
+        chw.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_complaints_buttonActionPerformed
+
+    private void NotifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotifyActionPerformed
+        // TODO add your handling code here:
+        Notify obj=new Notify();
+        obj.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_NotifyActionPerformed
+
     /**
      * @param args the command line arguments
      */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Dashboarduser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Dashboarduser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Dashboarduser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Dashboarduser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Dashboarduser().setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Notify;
+    private javax.swing.JButton complaints_button;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

@@ -271,12 +271,13 @@
           <Color blue="66" green="0" red="66" type="rgb"/>
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="5">
-            <StringItem index="0" value="Passenger"/>
-            <StringItem index="1" value="SupperFast"/>
-            <StringItem index="2" value="Local"/>
-            <StringItem index="3" value="InterCity"/>
-            <StringItem index="4" value="Express"/>
+          <StringArray count="6">
+            <StringItem index="0" value="Holiday Special"/>
+            <StringItem index="1" value="Passenger"/>
+            <StringItem index="2" value="SupperFast"/>
+            <StringItem index="3" value="Local"/>
+            <StringItem index="4" value="InterCity"/>
+            <StringItem index="5" value="Express"/>
           </StringArray>
         </Property>
       </Properties>

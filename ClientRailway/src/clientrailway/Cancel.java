@@ -42,7 +42,7 @@ public class Cancel extends javax.swing.JFrame {
             Socket s = new Socket("localhost",6666);
             DataOutputStream dout = new DataOutputStream(s.getOutputStream());
             
-            dout.writeUTF("userCancelTicket");
+            dout.writeUTF("userFetchTicketToCancel");
             dout.writeUTF(Login.loggedInUser);
             dout.writeUTF("null");
             dout.flush();
@@ -77,7 +77,7 @@ public class Cancel extends javax.swing.JFrame {
                 Date jour=sdfo.parse(crs.getString("DateOfJourney"));
                 if(jour.compareTo(cur)>=0)
                 {   
-//                System.out.println(rs1.getString("StationFrom"));
+                
                 Object o[]={crs.getString("DateOfJourney"),crs.getString("train_no"),crs.getString("StationFrom"),crs.getString("StationTo"),crs.getString("ticket_id")};
                 tm.addRow(o);
                 }
@@ -350,14 +350,24 @@ public class Cancel extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         String str=jTextField1.getText();
+        int ticketId = Integer.valueOf(str);
         int num=Integer.parseInt(str);
         try{
             
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Passenger", "root","");
+            
+            String sql="INSERT into cancelledTicket " 
+                        + "SELECT train_no,DateOfJourney,StationFrom,StationTo,seatNumber,pAction"
+                        + " from passrecord where ticket_id=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setInt(1, num);
+            pst.executeUpdate();
+            
             PreparedStatement ps=con.prepareStatement("delete from passrecord where ticket_id=?");
-            ps.setString(1, str);
+            ps.setInt(1, ticketId);
             ps.executeUpdate();
+            
         }
         catch(Exception e)
         {

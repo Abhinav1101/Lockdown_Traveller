@@ -77,7 +77,7 @@ public class SignupServerSide {
                     return 4;
                 }
                 else{
-                    String sql1 = "Insert into Passenger values(?,?,?,md5(?),0)";
+                    String sql1 = "Insert into Passenger values(?,?,?,md5(?),'No',0)";
                     PreparedStatement pst1 = con.prepareStatement(sql1);
                     pst1.setString(1, Name);
                     pst1.setString(2, Email);

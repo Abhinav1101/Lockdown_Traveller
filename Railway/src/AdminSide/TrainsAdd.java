@@ -76,7 +76,7 @@ String text="";
         cmbTrainSelect.setBackground(new java.awt.Color(51, 255, 255));
         cmbTrainSelect.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         cmbTrainSelect.setForeground(new java.awt.Color(102, 0, 102));
-        cmbTrainSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Passenger", "SupperFast", "Local", "InterCity", "Express" }));
+        cmbTrainSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Holiday Special", "Passenger", "SupperFast", "Local", "InterCity", "Express" }));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 0, 0));

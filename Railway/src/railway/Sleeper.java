@@ -21,15 +21,17 @@ import static railway.JdbcConnection.username;
 final class Sleeper extends TrainClasses{
     final int totalSeats=72;
     private Connection con=null;
-    public static boolean validSeat=false;
+    private boolean validSeat=false;
     
-    Sleeper(){
+    Sleeper(int age,String gender){
         try{
             Class.forName(classForName);
             con = DriverManager.getConnection(getConnection, username,password);
             String berth=BookingTicket.prefferedBerth;
             if(berth.equals("Lower")){
-                lowerBerth();
+                if((age>=60)||(age>=55&&gender.equals("Female"))){
+                    lowerBerth();
+                }
             }
             else if(berth.equals("Middle")){
                 middleBerth();
@@ -157,5 +159,8 @@ final class Sleeper extends TrainClasses{
         coachNumber = "S"+Integer.valueOf(val+1);
         seatNumber = counter%totalSeats;
     }
-    
+    @Override
+    public boolean validStatus(){
+        return validSeat;
+    }
 }

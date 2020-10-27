@@ -3,16 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/AdminPage.java</file>
-            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/SignupServerSide.java</file>
-            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/SearchTrainForUserInServer.java</file>
-            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/JdbcConnection.java</file>
-            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/Railway.java</file>
-            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/TrainsAdd.java</file>
-            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/CancelTrain.java</file>
-            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/LoginServerSide.java</file>
-            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/BookingTicket.java</file>
-            <file>file:/home/abhi/NetBeansProjects/Railway/src/railway/TrainsUpdate.java</file>
+            <file>file:/C:/Users/hp/Desktop/Softablitz%202020/Chat%20added/FinalWithChat/Railway/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/hp/Desktop/Softablitz%202020/Chat%20added/FinalWithChat/Railway/src/railway/HandlingComplaint.java</file>
+            <file>file:/C:/Users/hp/Desktop/Softablitz%202020/Chat%20added/FinalWithChat/Railway/src/railway/Railway.java</file>
+            <file>file:/C:/Users/hp/Desktop/Softablitz%202020/Chat%20added/FinalWithChat/Railway/src/AdminSide/TrainsAdd.java</file>
+            <file>file:/C:/Users/hp/Desktop/Softablitz%202020/Chat%20added/FinalWithChat/Railway/src/railway/JdbcConnection.java</file>
+            <file>file:/C:/Users/hp/Desktop/Softablitz%202020/Chat%20added/FinalWithChat/Railway/src/railway/BookTicket.java</file>
+            <file>file:/C:/Users/hp/Desktop/Softablitz%202020/Chat%20added/FinalWithChat/Railway/src/railway/BookingTicket.java</file>
         </group>
     </open-files>
 </project-private>

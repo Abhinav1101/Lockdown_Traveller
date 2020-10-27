@@ -5,6 +5,7 @@ import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,6 +15,7 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import javax.sql.rowset.CachedRowSet;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 
@@ -28,6 +30,7 @@ public class PassengerDetailsForm extends javax.swing.JFrame {
     java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
 java.time.LocalDate textFieldAsDate;
 java.sql.Date sqlDate;
+    private CachedRowSet crs=null;
     
 static String PassName11;
      
@@ -460,6 +463,13 @@ static String PassName11;
             res = Boolean.parseBoolean(str);
             System.out.println("result = "+str);
             }
+            
+            if(res){
+                ObjectInputStream objectIn = new ObjectInputStream(s.getInputStream());
+                
+                crs = (CachedRowSet)objectIn.readObject();
+            }
+            
             dout.close();
             s.close();
         }
@@ -469,7 +479,14 @@ static String PassName11;
         
         if (!res) {
             JOptionPane.showMessageDialog(this, "This train not found or Some error Occured!!, Please enter other train or try Again!!");
-        } 
+        }
+        else{
+            Ticket al;
+            al = new Ticket(crs);
+            al.setVisible(true);
+            this.setVisible(false);
+        }
+        
         
         //Iske bich me Abhi ka code hai
         

@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.prefs.Preferences;
 
 /**
  *
@@ -30,6 +31,7 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+     Preferences prefs = Preferences.userNodeForPackage(Login.class); // for "Remember me" feature
     public String Uname,Pass;
     static String loggedInUser="";
     public Login() {
@@ -37,6 +39,8 @@ public class Login extends javax.swing.JFrame {
         Toolkit toolkit = getToolkit();
         Dimension dim = toolkit.getScreenSize();
         setLocation(dim.width/2-getWidth()/2,dim.height/2-getHeight()/2); 
+          loginusername.setText(prefs.get("Username",""));
+          loginpass.setText(prefs.get("Password",""));
     }
 
     /**
@@ -57,6 +61,7 @@ public class Login extends javax.swing.JFrame {
         reset = new javax.swing.JButton();
         login = new javax.swing.JButton();
         signup = new javax.swing.JButton();
+        remember_me = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,6 +92,8 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        remember_me.setText("Remember me");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -111,7 +118,10 @@ public class Login extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(login)
                         .addGap(18, 18, 18)
-                        .addComponent(signup)))
+                        .addComponent(signup))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(240, 240, 240)
+                        .addComponent(remember_me)))
                 .addContainerGap(215, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -132,7 +142,9 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(reset)
                     .addComponent(login)
                     .addComponent(signup))
-                .addContainerGap(171, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(remember_me, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -157,6 +169,8 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         loginusername.setText(null);
         loginpass.setText(null);
+        prefs.put("Username","");
+        prefs.put("Password","");
     }//GEN-LAST:event_resetActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
@@ -190,13 +204,24 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,e);
         }
         
-        loginusername.setText(null);
-        loginpass.setText(null);
-        
         System.out.println("result = "+res);
         
         if(res==1){
-            dispose();
+                   if(remember_me.isSelected())
+                   {
+                        
+                        prefs.put("Username", Uname);
+                        prefs.put("Password",Pass);
+                   }
+                   else
+                   {
+                       String prev_username=prefs.get("Username","");
+                       if(!prev_username.equals(Uname))
+                       {
+                           prefs.put("Username","");
+                           prefs.put("Password","");
+                       }
+                   }
             JOptionPane.showMessageDialog(null, "success");
             loggedInUser=Uname;
 //            if(Uname.equals("admin")&& Pass.equals("admin")){
@@ -204,9 +229,37 @@ public class Login extends javax.swing.JFrame {
 //                admin.setVisible(true);
 //                setVisible(false);
 //            }
-            Dashboarduser obj=new Dashboarduser();
-            obj.setVisible(true);
-            setVisible(false);
+            try{
+                Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Passenger", "root","");
+            PreparedStatement ps=con.prepareStatement("select * from Passenger where Username=?");
+            ps.setString(1, loggedInUser);
+            ResultSet rs=ps.executeQuery();
+            System.out.println("done and found");
+            String st="";
+            while(rs.next())
+            {
+                st=rs.getString("verify");
+            }
+            System.out.println(st);
+            String stt="Yes";
+                if(st.equals(stt))
+                {
+                    Dashboarduser obj=new Dashboarduser();
+                    obj.setVisible(true);
+                    setVisible(false);
+                }  
+                else
+                {
+                    Verifymail obj=new Verifymail();
+                    obj.setVisible(true);
+                    setVisible(false);
+                }
+            }
+            catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(null, e);
+            } 
 
         }
         else if(res==2){
@@ -269,6 +322,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton login;
     private javax.swing.JPasswordField loginpass;
     private javax.swing.JTextField loginusername;
+    private javax.swing.JRadioButton remember_me;
     private javax.swing.JButton reset;
     private javax.swing.JButton signup;
     // End of variables declaration//GEN-END:variables

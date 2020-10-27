@@ -22,7 +22,7 @@ import static railway.JdbcConnection.username;
 final class AC2 extends TrainClasses{
     final int totalSeats=54;
     private Connection con=null;
-    static boolean validSeat=false;
+    private boolean validSeat=false;
     AC2(){
         try{
             Class.forName(classForName);
@@ -54,7 +54,7 @@ final class AC2 extends TrainClasses{
     }
     
     int calculateNumber(int a,int b){
-        return (8*a+b);
+        return (6*a+b);
     }
     @Override
     public void lowerBerth() {
@@ -94,7 +94,7 @@ final class AC2 extends TrainClasses{
         catch(Exception e){
             e.printStackTrace();
         }
-        counter = calculateNumber(counter,3);
+        counter = calculateNumber(counter,2);
     }
 
     @Override
@@ -112,7 +112,7 @@ final class AC2 extends TrainClasses{
         catch(Exception e){
             e.printStackTrace();
         }
-        counter = calculateNumber(counter,7);
+        counter = calculateNumber(counter,5);
     }
 
     @Override
@@ -130,7 +130,7 @@ final class AC2 extends TrainClasses{
         catch(Exception e){
             e.printStackTrace();
         }
-        counter = calculateNumber(counter,8);
+        counter = calculateNumber(counter,6);
     }
 
     @Override
@@ -140,5 +140,10 @@ final class AC2 extends TrainClasses{
         int val = counter/totalSeats;
         coachNumber = "A"+Integer.valueOf(val+1);
         seatNumber = counter%totalSeats;
+    }
+
+    @Override
+    public boolean validStatus() {
+        return validSeat;
     }
 }

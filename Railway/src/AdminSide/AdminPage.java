@@ -43,6 +43,8 @@ public class AdminPage extends javax.swing.JFrame {
         logout = new javax.swing.JButton();
         cancelTrain = new javax.swing.JButton();
         discount = new javax.swing.JButton();
+        Rerouted = new javax.swing.JButton();
+        Tour = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,6 +93,20 @@ public class AdminPage extends javax.swing.JFrame {
             }
         });
 
+        Rerouted.setText("Reroute");
+        Rerouted.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReroutedActionPerformed(evt);
+            }
+        });
+
+        Tour.setText("Tour Package");
+        Tour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TourActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -108,16 +124,22 @@ public class AdminPage extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(85, 85, 85)
-                        .addComponent(add)
-                        .addGap(39, 39, 39)
-                        .addComponent(delete)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(add)
+                                .addGap(39, 39, 39)
+                                .addComponent(delete))
+                            .addComponent(discount))
                         .addGap(34, 34, 34)
-                        .addComponent(update)
-                        .addGap(36, 36, 36)
-                        .addComponent(cancelTrain))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(update)
+                                .addGap(36, 36, 36)
+                                .addComponent(cancelTrain))
+                            .addComponent(Rerouted)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(278, 278, 278)
-                        .addComponent(discount)))
+                        .addGap(273, 273, 273)
+                        .addComponent(Tour)))
                 .addContainerGap(135, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -132,9 +154,13 @@ public class AdminPage extends javax.swing.JFrame {
                     .addComponent(delete)
                     .addComponent(update)
                     .addComponent(cancelTrain))
-                .addGap(18, 18, 18)
-                .addComponent(discount)
-                .addContainerGap(144, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(discount)
+                    .addComponent(Rerouted))
+                .addGap(32, 32, 32)
+                .addComponent(Tour)
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -202,12 +228,28 @@ public class AdminPage extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_discountActionPerformed
 
+    private void ReroutedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReroutedActionPerformed
+        // TODO add your handling code here:
+        Rerouted obj=new Rerouted();
+        obj.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_ReroutedActionPerformed
+
+    private void TourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TourActionPerformed
+        // TODO add your handling code here:
+        Tour obj=new Tour();
+        obj.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_TourActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Rerouted;
+    private javax.swing.JButton Tour;
     private javax.swing.JButton add;
     private javax.swing.JButton cancelTrain;
     private javax.swing.JButton delete;
