@@ -69,6 +69,7 @@ public class ChatWindow extends javax.swing.JFrame {
         back_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 204));
 
@@ -78,10 +79,8 @@ public class ChatWindow extends javax.swing.JFrame {
         jScrollPane12.setViewportView(jTextPane12);
 
         jTextArea1.setEditable(false);
-        jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Times New Roman", 1, 17)); // NOI18N
-        jTextArea1.setForeground(new java.awt.Color(0, 0, 0));
         jTextArea1.setRows(5);
         jTextArea1.setText("             \n          WELCOME TO THE COMPLAINTS FORUM!\n\n  If you are facing any issue in booking a ticket follow the \n  instructions given below.\n\n1.  Type the number corresponding to the query in the \n     field provided.\n\n2.  Click Send button to register your complaint within     \n     the system.\n\n3.  Try providing correct details wherever required to\n     avoid unnecessary issues.\n\n4.  Your complaints are registered into the database \n     along with your username and date. The Admin, then, \n     can see and provide the required solution.\n\n5.  Be patient! We provide efficient service to our \n     customers. The Admin will contact you as soon as \n     possible.\n         \n\n\n\tPress 'Back' button to exit !!");
         jScrollPane1.setViewportView(jTextArea1);
@@ -105,81 +104,93 @@ public class ChatWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, 668));
+
         jPanel2.setBackground(new java.awt.Color(255, 255, 153));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tf_complain_1.setEditable(false);
         tf_complain_1.setBackground(new java.awt.Color(255, 204, 204));
         tf_complain_1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        tf_complain_1.setForeground(new java.awt.Color(0, 0, 0));
         tf_complain_1.setText("Payment done sucessfully but ticket not booked. ");
         jScrollPane2.setViewportView(tf_complain_1);
+
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 803, 45));
 
         num_1.setEditable(false);
         num_1.setBackground(new java.awt.Color(255, 153, 153));
         num_1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         num_1.setFont(new java.awt.Font("Arial Black", 1, 26)); // NOI18N
-        num_1.setForeground(new java.awt.Color(0, 0, 0));
         num_1.setText("   1");
         jScrollPane6.setViewportView(num_1);
 
+        jPanel2.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 34, 88, 44));
+
         tf_complain_3.setBackground(new java.awt.Color(255, 204, 204));
         tf_complain_3.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        tf_complain_3.setForeground(new java.awt.Color(0, 0, 0));
         tf_complain_3.setText("Payment Gateway is not responding.");
         jScrollPane3.setViewportView(tf_complain_3);
+
+        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, 803, 45));
 
         tf_complain_4.setEditable(false);
         tf_complain_4.setBackground(new java.awt.Color(255, 204, 204));
         tf_complain_4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        tf_complain_4.setForeground(new java.awt.Color(0, 0, 0));
         tf_complain_4.setText("Ticket booked successfully but confirmation receipt is not shown.");
         jScrollPane4.setViewportView(tf_complain_4);
+
+        jPanel2.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 803, 45));
 
         tf_complain_2.setEditable(false);
         tf_complain_2.setBackground(new java.awt.Color(255, 204, 204));
         tf_complain_2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        tf_complain_2.setForeground(new java.awt.Color(0, 0, 0));
         tf_complain_2.setText("Meal booked sucessfully but not delivered.");
         jScrollPane5.setViewportView(tf_complain_2);
 
+        jPanel2.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 803, 45));
+
         tf_complain_5.setBackground(new java.awt.Color(255, 204, 204));
         tf_complain_5.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 16)); // NOI18N
-        tf_complain_5.setForeground(new java.awt.Color(0, 0, 0));
         tf_complain_5.setText("Other, Please specify");
         jScrollPane7.setViewportView(tf_complain_5);
 
+        jPanel2.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 320, 803, 45));
+
         num_4.setBackground(new java.awt.Color(255, 153, 153));
         num_4.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
-        num_4.setForeground(new java.awt.Color(0, 0, 0));
         num_4.setText("   4");
         jScrollPane8.setViewportView(num_4);
+
+        jPanel2.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 246, 88, 44));
 
         num_2.setEditable(false);
         num_2.setBackground(new java.awt.Color(255, 153, 153));
         num_2.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
-        num_2.setForeground(new java.awt.Color(0, 0, 0));
         num_2.setText("   2");
         jScrollPane9.setViewportView(num_2);
 
+        jPanel2.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 104, 88, 44));
+
         num_5.setBackground(new java.awt.Color(255, 153, 153));
         num_5.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
-        num_5.setForeground(new java.awt.Color(0, 0, 0));
         num_5.setText("   5");
         jScrollPane10.setViewportView(num_5);
+
+        jPanel2.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 318, 88, 44));
 
         num_3.setEditable(false);
         num_3.setBackground(new java.awt.Color(255, 153, 153));
         num_3.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
-        num_3.setForeground(new java.awt.Color(0, 0, 0));
         num_3.setText("   3");
         jScrollPane11.setViewportView(num_3);
 
+        jPanel2.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 175, 88, 44));
+
         tf_complain_no.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 25)); // NOI18N
-        tf_complain_no.setForeground(new java.awt.Color(0, 0, 0));
         tf_complain_no.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_complain_noActionPerformed(evt);
@@ -190,6 +201,7 @@ public class ChatWindow extends javax.swing.JFrame {
                 tf_complain_noKeyTyped(evt);
             }
         });
+        jPanel2.add(tf_complain_no, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 297, 55));
 
         send_complain_button.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         send_complain_button.setText("SEND");
@@ -198,6 +210,7 @@ public class ChatWindow extends javax.swing.JFrame {
                 send_complain_buttonActionPerformed(evt);
             }
         });
+        jPanel2.add(send_complain_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 410, 110, 55));
 
         back_button.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         back_button.setText("BACK");
@@ -206,101 +219,9 @@ public class ChatWindow extends javax.swing.JFrame {
                 back_buttonActionPerformed(evt);
             }
         });
+        jPanel2.add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 560, 107, 42));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(248, 248, 248)
-                        .addComponent(tf_complain_no, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(send_complain_button, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(307, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(155, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(22, 22, 22))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52))))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(196, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(22, 22, 22)))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(78, 78, 78)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tf_complain_no, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(send_complain_button, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
-                .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(34, 34, 34)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(526, Short.MAX_VALUE)))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(465, 11, 980, 668));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
