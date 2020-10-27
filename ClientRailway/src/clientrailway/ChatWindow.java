@@ -119,7 +119,7 @@ public class ChatWindow extends javax.swing.JFrame {
         tf_complain_1.setText("Payment done sucessfully but ticket not booked. ");
         jScrollPane2.setViewportView(tf_complain_1);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, 803, 45));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 803, 45));
 
         num_1.setEditable(false);
         num_1.setBackground(new java.awt.Color(255, 153, 153));
@@ -151,7 +151,7 @@ public class ChatWindow extends javax.swing.JFrame {
         tf_complain_2.setText("Meal booked sucessfully but not delivered.");
         jScrollPane5.setViewportView(tf_complain_2);
 
-        jPanel2.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 803, 45));
+        jPanel2.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 803, 45));
 
         tf_complain_5.setBackground(new java.awt.Color(255, 204, 204));
         tf_complain_5.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 16)); // NOI18N
